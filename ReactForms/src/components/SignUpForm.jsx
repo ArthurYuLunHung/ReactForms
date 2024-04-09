@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function SignUpForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (username.length < 8 && username) {
+      setError("please enter username that is at least 8 characters long");
+    } else {
+      setError("");
+    }
+  }, [username]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -31,6 +39,7 @@ export default function SignUpForm() {
     <>
       <div>
         <h2>Sign Up!</h2>
+        <h3>Your username must be eight characters in length</h3>
         {error && <p>{error}</p>}
         <form onSubmit={handleSubmit}>
           <label>
